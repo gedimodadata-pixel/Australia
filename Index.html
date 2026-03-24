@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Economic Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Poppins';
+  background:#0f0f0f;
+  color:white;
+}
+
+header{
+  padding:20px;
+  text-align:center;
+  background:#ff4da6;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.card{
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:12px;
+}
+
+h2{color:#ff4da6;margin:0 0 10px}
+
+.chart-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:20px;
+}
+
+.chart-box{
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:12px;
+}
+
+.insight{
+  margin-top:20px;
+  background:#1a1a1a;
+  padding:20px;
+  border-radius:12px;
+  line-height:1.6;
+}
+
+@media(max-width:768px){
+  .chart-row{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌸 Australia Economic Analysis Dashboard</h1>
+</header>
+
+<div class="container">
+
+<!-- KEY METRICS -->
+<div class="grid">
+  <div class="card"><h2>GDP 2026</h2><p>~2.2%</p></div>
+  <div class="card"><h2>Inflation</h2><p>~3%</p></div>
+  <div class="card"><h2>Unemployment</h2><p>~4.3%</p></div>
+  <div class="card"><h2>Trend</h2><p>Stabilizing</p></div>
+</div>
+
+<!-- CHARTS -->
+<div class="chart-row">
+  <div class="chart-box">
+    <h2>GDP Growth</h2>
+    <canvas id="gdpChart"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h2>Inflation</h2>
+    <canvas id="infChart"></canvas>
+  </div>
+</div>
+
+<div class="chart-row">
+  <div class="chart-box">
+    <h2>Unemployment</h2>
+    <canvas id="unempChart"></canvas>
+  </div>
+</div>
+
+<!-- INSIGHT -->
+<div class="insight">
+  <h2>📊 Insight</h2>
+  <p>• Giai đoạn 2023–2024: Kinh tế suy giảm do lạm phát cao và chi phí sinh hoạt tăng.</p>
+  <p>• Năm 2025: Bắt đầu phục hồi nhờ đầu tư và xuất khẩu dịch vụ.</p>
+  <p>• Năm 2026: Ổn định nhưng chưa bền vững do rủi ro bên ngoài.</p>
+</div>
+
+</div>
+
+<script>
+
+const years=['2023','2024','2025','2026'];
+
+new Chart(document.getElementById('gdpChart'),{
+  type:'line',
+  data:{labels:years,datasets:[{label:'GDP %',data:[1.5,1.3,2.3,2.2],tension:0.4}]}
+});
+
+new Chart(document.getElementById('infChart'),{
+  type:'line',
+  data:{labels:years,datasets:[{label:'Inflation %',data:[6,5,2.7,3],tension:0.4}]}
+});
+
+new Chart(document.getElementById('unempChart'),{
+  type:'line',
+  data:{labels:years,datasets:[{label:'Unemployment %',data:[3.5,4,4.2,4.3],tension:0.4}]}
+});
+
+</script>
+
+</body>
+</html>
