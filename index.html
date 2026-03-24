@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Data Analyst - Trang Nee</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins';display:flex;background:#0f0f0f;color:#eee}
+
+    .sidebar{
+      width:260px;
+      background:linear-gradient(180deg,#ff4da6,#ff85c1);
+      padding:25px;
+      height:100vh;
+      position:fixed;
+    }
+
+    .sidebar h2{margin-top:0}
+    .sidebar p{font-size:0.9rem;opacity:0.9}
+    .sidebar div{margin:18px 0;cursor:pointer;font-weight:500}
+
+    .main{
+      margin-left:260px;
+      padding:30px;
+      width:100%;
+    }
+
+    .section{display:none}
+    .active{display:block}
+
+    .card{
+      background:rgba(255,255,255,0.05);
+      padding:20px;
+      border-radius:15px;
+      margin:15px 0;
+      box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    h1{margin-top:0}
+
+    .skills span{
+      display:inline-block;
+      background:#ff4da6;
+      padding:5px 10px;
+      border-radius:10px;
+      margin:5px;
+      font-size:0.8rem;
+    }
+
+    canvas{margin-top:20px}
+
+  </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>💗 Trang Nee</h2>
+  <p>Data / Kinh tế</p>
+
+  <div onclick="show('home')">🏠 Dashboard</div>
+  <div onclick="show('about')">👩 Giới thiệu</div>
+  <div onclick="show('skills')">🧠 Kỹ năng</div>
+  <div onclick="show('project')">📊 Dự án</div>
+  <div onclick="show('contact')">📩 Liên hệ</div>
+</div>
+
+<div class="main">
+
+  <!-- HOME -->
+  <div id="home" class="section active">
+    <h1>📊 Economic Dashboard</h1>
+    <p>Dữ liệu kinh tế Australia (World Bank API)</p>
+    <div id="cards"></div>
+    <canvas id="chart"></canvas>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about" class="section">
+    <h1>👩 Giới thiệu</h1>
+    <div class="card">
+      <p>Tôi là người định hướng phát triển trong lĩnh vực Data Analyst và Kinh tế.</p>
+      <p>Có khả năng phân tích dữ liệu, trực quan hóa và xây dựng dashboard.</p>
+      <p>Mục tiêu: trở thành Data Analyst chuyên nghiệp.</p>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div id="skills" class="section">
+    <h1>🧠 Kỹ năng</h1>
+    <div class="card skills">
+      <span>Excel</span>
+      <span>Data Analysis</span>
+      <span>Chart.js</span>
+      <span>HTML/CSS</span>
+      <span>API</span>
+    </div>
+  </div>
+
+  <!-- PROJECT -->
+  <div id="project" class="section">
+    <h1>📊 Dự án</h1>
+    <div class="card">
+      <h3>Australia Economy Dashboard</h3>
+      <p>✔ Sử dụng World Bank API</p>
+      <p>✔ Trực quan hóa dữ liệu bằng biểu đồ</p>
+      <p>✔ Thiết kế UI dashboard hiện đại</p>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact" class="section">
+    <h1>📩 Liên hệ</h1>
+    <div class="card">
+      <p>Email: yourmail@gmail.com</p>
+      <p>GitHub: github.com/yourname</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+let chart;
+
+async function loadData(){
+  const url='https://api.worldbank.org/v2/country/AUS/indicator/NY.GDP.MKTP.KD.ZG?format=json';
+  const res=await fetch(url);
+  const data=await res.json();
+
+  const values=data[1].slice(0,5).reverse();
+
+  const labels=values.map(v=>v.date);
+  const nums=values.map(v=>v.value);
+
+  const cards=document.getElementById('cards');
+  cards.innerHTML='';
+
+  values.forEach(v=>{
+    cards.innerHTML+=`<div class="card">${v.date}: ${v.value ?? 'N/A'}%</div>`;
+  });
+
+  if(chart) chart.destroy();
+  chart=new Chart(document.getElementById('chart'),{
+    type:'line',
+    data:{labels:labels,datasets:[{label:'GDP Growth (%)',data:nums}]}
+  });
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
