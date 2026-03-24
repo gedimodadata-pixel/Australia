@@ -1,163 +1,179 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Data Analyst - Trang Nee</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australia Economy Presentation Pro</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body{
+  margin:0;
+  font-family:'Poppins';
+  overflow:hidden;
+  background:linear-gradient(135deg,#0f0f0f,#1c1c1c);
+  color:white;
+}
 
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:'Poppins';display:flex;background:#0f0f0f;color:#eee}
+.slide{
+  position:absolute;
+  width:100vw;
+  height:100vh;
+  padding:40px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  transform:scale(0.95);
+  transition:all 0.8s ease;
+}
 
-    .sidebar{
-      width:260px;
-      background:linear-gradient(180deg,#ff4da6,#ff85c1);
-      padding:25px;
-      height:100vh;
-      position:fixed;
-    }
+.slide.active{
+  opacity:1;
+  transform:scale(1);
+}
 
-    .sidebar h2{margin-top:0}
-    .sidebar p{font-size:0.9rem;opacity:0.9}
-    .sidebar div{margin:18px 0;cursor:pointer;font-weight:500}
+h1{
+  font-size:2.8rem;
+  color:#ff4da6;
+  animation:fadeUp 1s ease;
+}
 
-    .main{
-      margin-left:260px;
-      padding:30px;
-      width:100%;
-    }
+p{
+  max-width:800px;
+  text-align:center;
+  opacity:0;
+  animation:fadeUp 1s ease forwards;
+  animation-delay:0.5s;
+}
 
-    .section{display:none}
-    .active{display:block}
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(30px)}
+  to{opacity:1; transform:translateY(0)}
+}
 
-    .card{
-      background:rgba(255,255,255,0.05);
-      padding:20px;
-      border-radius:15px;
-      margin:15px 0;
-      box-shadow:0 5px 15px rgba(0,0,0,0.3);
-    }
+.controls{
+  position:fixed;
+  bottom:20px;
+  width:100%;
+  text-align:center;
+}
 
-    h1{margin-top:0}
+button{
+  background:#ff4da6;
+  border:none;
+  padding:10px 20px;
+  margin:5px;
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+}
 
-    .skills span{
-      display:inline-block;
-      background:#ff4da6;
-      padding:5px 10px;
-      border-radius:10px;
-      margin:5px;
-      font-size:0.8rem;
-    }
+.progress{
+  position:fixed;
+  top:0;
+  left:0;
+  height:5px;
+  background:#ff4da6;
+  width:0%;
+  transition:width 5s linear;
+}
 
-    canvas{margin-top:20px}
+canvas{max-width:90%;max-height:60%}
 
-  </style>
+</style>
 </head>
 
 <body>
 
-<div class="sidebar">
-  <h2>💗 Trang Nee</h2>
-  <p>Data / Kinh tế</p>
+<div class="progress" id="progress"></div>
 
-  <div onclick="show('home')">🏠 Dashboard</div>
-  <div onclick="show('about')">👩 Giới thiệu</div>
-  <div onclick="show('skills')">🧠 Kỹ năng</div>
-  <div onclick="show('project')">📊 Dự án</div>
-  <div onclick="show('contact')">📩 Liên hệ</div>
+<div class="slide active">
+  <h1>🌸 Australia Economy</h1>
+  <p>Phân tích giai đoạn 2023–2026</p>
 </div>
 
-<div class="main">
+<div class="slide">
+  <h1>📉 2023–2024</h1>
+  <p>Kinh tế chậm lại, lạm phát cao, tiêu dùng yếu</p>
+</div>
 
-  <!-- HOME -->
-  <div id="home" class="section active">
-    <h1>📊 Economic Dashboard</h1>
-    <p>Dữ liệu kinh tế Australia (World Bank API)</p>
-    <div id="cards"></div>
-    <canvas id="chart"></canvas>
-  </div>
+<div class="slide">
+  <h1>📈 2025–2026</h1>
+  <p>Phục hồi nhưng chưa bền vững</p>
+</div>
 
-  <!-- ABOUT -->
-  <div id="about" class="section">
-    <h1>👩 Giới thiệu</h1>
-    <div class="card">
-      <p>Tôi là người định hướng phát triển trong lĩnh vực Data Analyst và Kinh tế.</p>
-      <p>Có khả năng phân tích dữ liệu, trực quan hóa và xây dựng dashboard.</p>
-      <p>Mục tiêu: trở thành Data Analyst chuyên nghiệp.</p>
-    </div>
-  </div>
+<div class="slide">
+  <h1>📊 GDP Growth</h1>
+  <canvas id="chart"></canvas>
+</div>
 
-  <!-- SKILLS -->
-  <div id="skills" class="section">
-    <h1>🧠 Kỹ năng</h1>
-    <div class="card skills">
-      <span>Excel</span>
-      <span>Data Analysis</span>
-      <span>Chart.js</span>
-      <span>HTML/CSS</span>
-      <span>API</span>
-    </div>
-  </div>
+<div class="slide">
+  <h1>🎯 Kết luận</h1>
+  <p>Hướng tới hạ cánh mềm nhưng còn rủi ro</p>
+</div>
 
-  <!-- PROJECT -->
-  <div id="project" class="section">
-    <h1>📊 Dự án</h1>
-    <div class="card">
-      <h3>Australia Economy Dashboard</h3>
-      <p>✔ Sử dụng World Bank API</p>
-      <p>✔ Trực quan hóa dữ liệu bằng biểu đồ</p>
-      <p>✔ Thiết kế UI dashboard hiện đại</p>
-    </div>
-  </div>
-
-  <!-- CONTACT -->
-  <div id="contact" class="section">
-    <h1>📩 Liên hệ</h1>
-    <div class="card">
-      <p>Email: yourmail@gmail.com</p>
-      <p>GitHub: github.com/yourname</p>
-    </div>
-  </div>
-
+<div class="controls">
+  <button onclick="prevSlide()">⬅</button>
+  <button onclick="nextSlide()">➡</button>
 </div>
 
 <script>
 
-function show(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+let slides=document.querySelectorAll('.slide');
+let index=0;
+let auto=true;
+let interval;
+
+function showSlide(i){
+  slides.forEach(s=>s.classList.remove('active'));
+  slides[i].classList.add('active');
+
+  // progress bar
+  const bar=document.getElementById('progress');
+  bar.style.width='0%';
+  setTimeout(()=>bar.style.width='100%',50);
 }
 
-let chart;
-
-async function loadData(){
-  const url='https://api.worldbank.org/v2/country/AUS/indicator/NY.GDP.MKTP.KD.ZG?format=json';
-  const res=await fetch(url);
-  const data=await res.json();
-
-  const values=data[1].slice(0,5).reverse();
-
-  const labels=values.map(v=>v.date);
-  const nums=values.map(v=>v.value);
-
-  const cards=document.getElementById('cards');
-  cards.innerHTML='';
-
-  values.forEach(v=>{
-    cards.innerHTML+=`<div class="card">${v.date}: ${v.value ?? 'N/A'}%</div>`;
-  });
-
-  if(chart) chart.destroy();
-  chart=new Chart(document.getElementById('chart'),{
-    type:'line',
-    data:{labels:labels,datasets:[{label:'GDP Growth (%)',data:nums}]}
-  });
+function nextSlide(){
+  index=(index+1)%slides.length;
+  showSlide(index);
 }
 
-loadData();
+function prevSlide(){
+  index=(index-1+slides.length)%slides.length;
+  showSlide(index);
+}
+
+// auto play
+function startAuto(){
+  interval=setInterval(()=>{
+    nextSlide();
+  },5000);
+}
+
+startAuto();
+
+// keyboard
+window.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight') nextSlide();
+  if(e.key==='ArrowLeft') prevSlide();
+});
+
+// chart
+new Chart(document.getElementById('chart'),{
+  type:'line',
+  data:{
+    labels:['2023','2024','2025','2026'],
+    datasets:[{
+      label:'GDP %',
+      data:[1.5,1.3,2.3,2.2],
+      tension:0.4
+    }]
+  }
+});
 
 </script>
 
